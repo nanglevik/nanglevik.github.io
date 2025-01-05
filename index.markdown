@@ -4,3 +4,8 @@
 
 layout: home
 ---
+This is the home page
+
+- [Test Article](/2025/01/05/myarticle/)
+- [Test 2](/test/)
+- [Orto](/orto/)
