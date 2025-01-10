@@ -7,35 +7,48 @@
     <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
 </head>
 <body>
-    <header>
+    <header class="header">
         <p><strong>{{site.title}}</strong></p>
-        <p>This is the article layout</p>
+        <p>This is the 'article' layout</p>
         <p>Last edited {{ page.date }}</p>
-        
-        <nav>
-            <!-- Add navigation links -->
-        </nav>
+
+        <div id="search-container">
+            <input type="text" id="search-box" placeholder="Type to search through all articles...">
+            <ul id="search-results"></ul>
+        </div>
     </header>
 
-    <div id="navbar">
+    <nav class="navbar">
         <a href="/">Home</a>
         <a href="#news">News</a>
-    </div>
+    </nav>
 
-    <div class="container">
-        <!-- Sidebar for the outline -->
-        <div class="sidebar">
+    <div class="main-layout">
+        <aside class="sidebar" id="sidebar">
+            <button class="toggle-button" id="toggle-sidebar">☰</button>
             <div id="toc"></div> <!-- Table of contents will be generated here -->
-        </div>
 
-        <div class="article_content">
+            <strong>Graphics</strong>
+            
+            <div class="graphic-section">
+                <div id="thumbnails"></div>
+            </div>
+
+        </aside>
+
+        <main class="article-content">
             {{ content }} <!-- This is where the content of index.md will be inserted -->
-        </div>
-
+        </main>
     </div>
 
+    <div class="lightbox" id="lightbox">
+        <span class="close" id="close-lightbox">✖</span>
+        <span class="prev" id="prev-slide">❮</span>
+        <span class="next" id="next-slide">❯</span>
+        <div class="content" id="lightbox-content"></div>
+    </div>
 
-    <footer>
+    <footer class="footer">
         <p>&copy; 2025 nanglevik</p>
     </footer>
 
@@ -72,6 +85,120 @@
                         });
                     }
                 });
+            });
+        });
+    </script>
+
+    <script>
+        const toggleSidebar = document.getElementById('toggle-sidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+        });
+    </script>
+
+    <script src="/assets/js/lunr.min.js"></script>
+    <script src="/assets/js/search.js"></script>
+
+
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const thumbnailsContainer = document.getElementById('thumbnails');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxContent = document.getElementById('lightbox-content');
+            const closeLightbox = document.getElementById('close-lightbox');
+            const prevSlide = document.getElementById('prev-slide');
+            const nextSlide = document.getElementById('next-slide');
+
+            // Collect all images and videos in the article
+            const mediaElements = document.querySelectorAll('.article-content img, .article-content iframe');
+            const mediaArray = Array.from(mediaElements);
+
+            // Generate thumbnails dynamically
+            mediaArray.forEach((element, index) => {
+                const thumbnail = document.createElement('div');
+                if (element.tagName === 'IMG') {
+                    thumbnail.innerHTML = `<img src="${element.src}" data-index="${index}">`;
+                } else if (element.tagName === 'IFRAME') {
+                    thumbnail.innerHTML = `<div class="video-icon" data-index="${index}"></div>`;
+                }
+                thumbnailsContainer.appendChild(thumbnail);
+            });
+
+            let currentIndex = 0;
+
+            // Open lightbox
+            function openLightbox(index) {
+                currentIndex = index;
+                const currentElement = mediaArray[currentIndex];
+                lightboxContent.innerHTML = currentElement.outerHTML;
+                lightbox.style.display = 'flex';
+            }
+
+            // Navigate lightbox
+            function showSlide(offset) {
+                currentIndex = (currentIndex + offset + mediaArray.length) % mediaArray.length;
+                openLightbox(currentIndex);
+            }
+
+            // Event listeners
+            thumbnailsContainer.addEventListener('click', (e) => {
+                const index = e.target.dataset.index;
+                if (index !== undefined) {
+                    openLightbox(parseInt(index));
+                }
+            });
+
+            closeLightbox.addEventListener('click', () => {
+                lightbox.style.display = 'none';
+            });
+
+            prevSlide.addEventListener('click', () => {
+                showSlide(-1);
+            });
+
+            nextSlide.addEventListener('click', () => {
+                showSlide(1);
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+    <button id="back-to-top" title="Go to top">⬆</button>
+    <script>
+        const backToTopButton = document.getElementById('back-to-top');
+
+        // Show or hide the button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 160) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        // Scroll to the top when the button is clicked
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scrolling
             });
         });
     </script>

@@ -5,8 +5,7 @@
 
 title: Medical notes - nanglevik
 email: nanglevik@gmail.com
-title: Medical notes by nanglevik
-email: email here
+
 description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
@@ -15,7 +14,11 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://nanglevik.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  nanglevik
-github_username:  nanglevik
+
+collections:
+   articles:
+      output: true
+      permalink: /:title/
 
 # Build settings
 theme: minima
@@ -41,3 +44,6 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+exclude:
+  - search.json 

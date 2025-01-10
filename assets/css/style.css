@@ -8,63 +8,99 @@
 }
 
 body {
-    all: unset;
+    margin: 0;
+    font-family: Arial, sans-serif;
     background-color: var(--background-color-1);
     color: var(--color-white);
-}
-
-html {
-    overscroll-behavior:auto;
 }
 
 strong {
     color: var(--color-red);
 }
 
-#navbar {
+/* Header*/
+
+.header {
+    text-align: center;
+    padding: 1em;
+}
+
+/* Navbar */
+
+.navbar {
+    background-color: var(--background-color-2);
+    padding: 0.5em;
     position: sticky;
     top: 0;
-    overflow: hidden;
-    background-color: var(--background-color-2);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
 }
 
-    #navbar a {
-        float: left;
-        display: block;
+    .navbar a {
         color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
         text-decoration: none;
-        font-size: 17px;
+        padding: 0.5em 1em;
     }
 
-        #navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
+    .navbar a:hover {
+        background-color: var(--color-silver);
+        color: var(--background-color-1);
+    }
 
-
-.container {
+/* main-layout */
+.main-layout {
     display: flex;
+    flex: 1;
+    flex-wrap: nowrap; /* Prevent wrapping */
 }
 
-.article_content {
-    margin: 1em;
-}
-
-/* Sidebar styles */
+/* Sidebar*/
 .sidebar {
-    position: sticky;
-    top: 48px;
-
-    width: fit-content;
-
-    max-height: 100vh;
-    overflow-y: auto; /* Allow scrolling if the TOC is long */
-    margin-right: 20px;
-    border-right: 1px solid #ddd; /* Optional: adds a divider line */
-    padding: 10px;
+    background-color: var(--background-color-2);
+    color: var(--color-white);
+    width: 250px;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+    padding: 1em;
+    position: relative;
 }
+
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+
+    .sidebar .toggle-button {
+        position: absolute;
+        top: 10px;
+        right: -40px;
+        background-color: var(--background-color-2);
+        color: var(--color-yellow);
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        z-index: 100;
+        transition: transform 0.3s ease;
+    }
+
+/* Sidebar Button */
+.toggle-button {
+    position: sticky;
+    top: 0;
+    z-index: 11;
+    background-color: var(--background-color-1);
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    .toggle-button:hover {
+        background-color: #666;
+    }
 
 /* Table of contents styles */
 #toc ul {
@@ -85,4 +121,253 @@ strong {
 
     #toc a:hover {
         color: #ff9839;
+    }
+
+/* Article content */
+.article-content {
+    flex-grow: 1; /* Allow the content to expand fully */
+    margin: 0; /* Ensure no extra margin is affecting layout */
+    width: 100%; /* Default to full width */
+    padding: 2em;
+    background-color: #303033; /* Maintain the intended background color */
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* When Sidebar is collapsed, push the content to the left */
+.sidebar.collapsed ~ .article-content {
+    margin-left: 0; /* Remove any leftover margin */
+    width: 100%; /* Make the article-content fill the entire width */
+}
+
+/* Optional: On narrow screens, make the article content take more space automatically */
+@media (max-width: 768px) {
+    .article-content {
+        padding: 1em; /* Adjust padding for smaller screens */
+    }
+}
+
+
+
+
+
+/* Footer */
+.footer {
+    background-color: var(--background-color-2);
+    color: var(--color-silver);
+    text-align: center;
+    padding: 1em;
+}
+
+
+
+
+
+/* Smaller screens*/
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70%;
+    }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .sidebar .toggle-button {
+            right: -50px;
+        }
+
+    .article-content {
+        padding: 1em;
+    }
+}
+
+
+/* Search */
+/* Search Container */
+#search-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* Search Box */
+#search-box {
+    width: 100%;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid var(--color-silver);
+    border-radius: 1em;
+    transition: border-color 0.5s ease, box-shadow 0.5s ease; /* Smooth transitions */
+}
+
+    /* Focus state for search box */
+    #search-box:focus {
+        outline: none;
+        border-color: var(--color-yellow); /* Blue border on focus */
+        box-shadow: 0 0 10px #f8b16eb8; /* Light blue glow effect */
+    }
+
+/* Search Results */
+/* For smooth fade-in and fade-out transitions */
+#search-results {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    background: var(--background-color-1);
+    border: 1px solid var(--color-silver);
+    border-radius: 1em;
+    max-height: 300px;
+    /*/overflow-y: auto;
+    /* Initial state: hidden but occupies space */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0s 0.5s; /* Delayed visibility change */
+}
+
+    /* Show the results */
+    #search-results.show {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.5s, visibility 0s 0s; /* Visibility appears instantly when visible */
+    }
+
+    #search-results li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        #search-results li:last-child {
+            border-bottom: none;
+        }
+
+    #search-results a {
+        text-decoration: none;
+        color: var(--color-yellow);
+        pointer-events: auto; /* Ensure links are clickable even if transition is applied */
+    }
+
+        #search-results a:hover {
+            text-decoration: underline;
+        }
+
+
+/* Back to top Button*/
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-yellow);
+    color: var(--background-color-1);
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none; /* Hidden by default */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+
+    #back-to-top:hover {
+        background-color: var(--color-red);
+        color: var(--color-white);
+    }
+
+    /* Visible state for the button */
+    #back-to-top.show {
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+
+
+
+/* Graphic box */
+
+/* Styles for the graphic section */
+.graphic-section {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: var(--background-color-1);
+    border: 1px solid var(--color-white);
+    border-radius: 5px;
+}
+
+/* Sidebar gallery: grid layout for thumbnails */
+.graphic-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Space between thumbnails */
+}
+
+    /* Thumbnail styles */
+    .graphic-section img, .graphic-section .video-icon {
+        width: 0 0 calc(50% - 10px); /* Two items per row with space for gap */
+        max-width: 100%; /* Prevents stretching beyond parent container */
+        height: auto; /* Maintain aspect ratio */
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+        transition: transform 0.2s ease; /* Zoom effect */
+    }
+
+        .graphic-section img:hover, .graphic-section .video-icon:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+/* Video icon specific styles */
+.video-icon {
+    background: url('/assets/images/video-icon.png') no-repeat center center;
+    background-size: contain;
+}
+
+/* Lightbox styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+    /* Lightbox content */
+    .lightbox img, .lightbox iframe {
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    /* Lightbox controls */
+    .lightbox .close, .lightbox .prev, .lightbox .next {
+        position: absolute;
+        font-size: 2rem;
+        color: #fff;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .lightbox .close {
+        top: 10px;
+        right: 20px;
+    }
+
+    .lightbox .prev, .lightbox .next {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .lightbox .prev {
+        left: 10px;
+    }
+
+    .lightbox .next {
+        right: 10px;
     }

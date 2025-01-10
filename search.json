@@ -1,0 +1,16 @@
+---
+layout: none
+---
+
+[
+  {% for article in site.articles %}
+    {
+      "id": "{{ article.url | slugify }}",
+      "title": "{{ article.title | escape }}",
+      "author": "{{ article.author | escape }}",
+      "category": "{{ article.category | escape }}",
+      "content": {{ article.content | strip_html | strip_newlines | jsonify }},
+      "url": "{{ article.url | relative_url }}"
+    }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
