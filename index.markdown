@@ -6,6 +6,12 @@ layout: home
 ---
 This is the home page
 
-- [Test Article](/2025/01/05/myarticle/)
-- [Test 2](/test/)
+- [Medisin](/medisin/)
 - [Orto](/orto/)
+- [Gastro](/gastro/)
+- [About](/about/)
+
+# Header 1
+apsdfasdf
+## Header 2
+awr

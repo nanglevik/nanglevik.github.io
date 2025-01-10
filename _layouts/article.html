@@ -8,27 +8,32 @@
 </head>
 <body>
     <header>
-        <h1>{{site.title}}</h1>
-        <p>This is the defualt layout</p>
-        <button>Welcome</button>
+        <p><strong>{{site.title}}</strong></p>
+        <p>This is the article layout</p>
+        <p>Last edited {{ page.date }}</p>
+        
         <nav>
             <!-- Add navigation links -->
         </nav>
     </header>
 
     <div id="navbar">
-        <a href="#home">Home</a>
+        <a href="/">Home</a>
         <a href="#news">News</a>
     </div>
 
-    <!-- Sidebar for the outline -->
-    <div class="sidebar">
-        <div id="toc"></div> <!-- Table of contents will be generated here -->
+    <div class="container">
+        <!-- Sidebar for the outline -->
+        <div class="sidebar">
+            <div id="toc"></div> <!-- Table of contents will be generated here -->
+        </div>
+
+        <div class="article_content">
+            {{ content }} <!-- This is where the content of index.md will be inserted -->
+        </div>
+
     </div>
 
-    <main>
-        {{ content }} <!-- This is where the content of index.md will be inserted -->
-    </main>
 
     <footer>
         <p>&copy; 2025 nanglevik</p>
@@ -62,7 +67,7 @@
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop,
+                            top: targetElement.offsetTop - 60,
                             behavior: "smooth"
                         });
                     }

@@ -17,11 +17,15 @@ html {
     overscroll-behavior:auto;
 }
 
+strong {
+    color: var(--color-red);
+}
+
 #navbar {
     position: sticky;
     top: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: var(--background-color-2);
 }
 
     #navbar a {
@@ -40,11 +44,21 @@ html {
         }
 
 
+.container {
+    display: flex;
+}
+
+.article_content {
+    margin: 1em;
+}
+
 /* Sidebar styles */
 .sidebar {
     position: sticky;
-    top: 0;
-    width: 200px;
+    top: 48px;
+
+    width: fit-content;
+
     max-height: 100vh;
     overflow-y: auto; /* Allow scrolling if the TOC is long */
     margin-right: 20px;
@@ -56,6 +70,7 @@ html {
 #toc ul {
     list-style-type: none;
     padding-left: 0;
+    top: 3em;
 }
 
     #toc ul li {

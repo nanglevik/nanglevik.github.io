@@ -2,19 +2,10 @@
 layout: article
 title: Orto
 permalink: /orto/
+date: 2025-01-05
 ---
 
 # Ortopedi
-
-[**Generelt	1**](#generelt)
-
-[**Fraktur	1**](#fraktur)
-
-[Humerusfraktur	1](#humerusfraktur)
-
-[Skafoidfraktur	2](#skafoidfraktur)
-
-[**Commotio	3**](#commotio)
 
 # Generelt {#generelt}
 
