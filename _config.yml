@@ -45,5 +45,9 @@ plugins:
 #   - vendor/gems/
 #   - vendor/ruby/
 
+include:
+  - "_includes"
+  - "_data"
+
 exclude:
   - search.json 

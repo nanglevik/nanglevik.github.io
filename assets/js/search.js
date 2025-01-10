@@ -57,7 +57,7 @@
     }
 
     // Fetch the search.json and create the Lunr index
-    fetch('/search.json')
+    fetch('/_includes/search.json')
         .then(response => response.json())
         .then(data => {
             // Initialize Lunr index
