@@ -4,42 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+
+    <link rel="stylesheet" href="{{ "/assets/css/base.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/layout.css" | relative_url }}">
 </head>
 <body>
     <header class="header">
         <p><strong>{{site.title}}</strong></p>
         <p>This is the 'article' layout</p>
         <p>Last edited {{ page.date }}</p>
-
-        <div id="search-container">
-            <input type="text" id="search-box" placeholder="Type to search through all articles...">
-            <ul id="search-results"></ul>
-        </div>
     </header>
 
     <nav class="navbar">
         <a href="/">Home</a>
         <a href="#news">News</a>
+
+        <div id="search-container">
+            <input type="text" id="search-box" placeholder="Type to search through all articles...">
+            <ul id="search-results"></ul>
+        </div>
     </nav>
 
-    <div class="main-layout">
+    <div class="main-container">
+        <button class="toggle-button" id="toggle-sidebar"><<</button>
+
         <aside class="sidebar" id="sidebar">
-            <button class="toggle-button" id="toggle-sidebar">☰</button>
             <div id="toc"></div> <!-- Table of contents will be generated here -->
 
-            <strong>Graphics</strong>
-            
             <div class="graphic-section">
+                <strong>Graphics</strong>
                 <div id="thumbnails"></div>
             </div>
 
         </aside>
 
-        <main class="article-content">
+        <div class="article-content">
             {{ content }} <!-- This is where the content of index.md will be inserted -->
-        </main>
+        </div>
     </div>
+
+    <script>
+        const toggleButton = document.querySelector(".toggle-button");
+        const sidebar = document.querySelector(".sidebar");
+        const articleContent = document.querySelector(".article-content");
+
+        // Toggle the sidebar's visibility
+        toggleButton.addEventListener("click", function () {
+            sidebar.classList.toggle("collapsed");
+            articleContent.classList.toggle("expanded");
+
+            // Update toggleButton's position based on the sidebar's state
+            if (sidebar.classList.contains("collapsed")) {
+                toggleButton.style.left = "0"; // Position when sidebar is collapsed
+                toggleButton.innerHTML = ">>";
+            } else {
+                toggleButton.style.left = "236px"; // Position when sidebar is expanded
+                toggleButton.innerHTML = "<<";
+            }
+            
+        });
+
+        document.addEventListener("scroll", () => {
+            const navbar = document.querySelector(".navbar");
+            const toggleButton = document.querySelector(".toggle-button");
+
+            // Get the bottom position of the navbar
+            const navbarBottom = navbar.getBoundingClientRect().bottom;
+
+            // Set the toggle button's position dynamically
+            toggleButton.style.top = `${navbarBottom + 16}px`;
+            
+        });
+
+
+        function syncSidebarHeight() {
+            const sidebar = document.querySelector('.sidebar');
+            const articleContent = document.querySelector('.article-content');
+
+            // Adjust the sidebar height to match the article content height
+            sidebar.style.height = `${articleContent.scrollHeight}px`;
+        }
+
+        // Run the function when the page loads and on window resize
+        window.addEventListener('load', syncSidebarHeight);
+        window.addEventListener('resize', syncSidebarHeight);
+    </script>
+
 
     <div class="lightbox" id="lightbox">
         <span class="close" id="close-lightbox">✖</span>
@@ -48,9 +98,14 @@
         <div class="content" id="lightbox-content"></div>
     </div>
 
+
+    <button id="back-to-top" title="Go to top">⬆</button>
+
     <footer class="footer">
         <p>&copy; 2025 nanglevik</p>
     </footer>
+
+
 
     <!-- Script to generate the TOC and enable smooth scrolling -->
     <script>
@@ -92,9 +147,11 @@
     <script>
         const toggleSidebar = document.getElementById('toggle-sidebar');
         const sidebar = document.getElementById('sidebar');
+        const mainContainer = document.querySelector('.main-container');
 
         toggleSidebar.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
+            mainContainer.classList.toggle('sidebar-collapsed');
         });
     </script>
 
@@ -119,13 +176,16 @@
             const mediaElements = document.querySelectorAll('.article-content img, .article-content iframe');
             const mediaArray = Array.from(mediaElements);
 
+            // default video thumbnail
+            const defaultVideoThumbnail = '/assets/images/default-video-thumbnail.png';
             // Generate thumbnails dynamically
             mediaArray.forEach((element, index) => {
                 const thumbnail = document.createElement('div');
                 if (element.tagName === 'IMG') {
                     thumbnail.innerHTML = `<img src="${element.src}" data-index="${index}">`;
                 } else if (element.tagName === 'IFRAME') {
-                    thumbnail.innerHTML = `<div class="video-icon" data-index="${index}"></div>`;
+                    //thumbnail.innerHTML = `<div class="video-icon" data-index="${index}"></div>`;
+                    thumbnail.innerHTML = `<img src="${defaultVideoThumbnail}" class="video-thumbnail" data-index="${index}">`;
                 }
                 thumbnailsContainer.appendChild(thumbnail);
             });
@@ -181,7 +241,7 @@
 
 
 
-    <button id="back-to-top" title="Go to top">⬆</button>
+
     <script>
         const backToTopButton = document.getElementById('back-to-top');
 

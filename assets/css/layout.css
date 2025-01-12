@@ -1,32 +1,7 @@
 :root {
-    --background-color-1: #212435;
-    --background-color-2: #40456f;
-    --color-yellow: #ffd183;
-    --color-red: #ff8383;
-    --color-silver: #bbbbbb;
-    --color-white: #d7d7d7;
-
     --header-height: 150px;
     --navbar-height: 60px;
 }
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color-1);
-    color: var(--color-white);
-    min-height: 100vh; /* Ensure body takes full height */
-    overflow-y: auto;
-    height: 100%;
-}
-
-
-
-strong {
-    color: var(--color-red);
-}
-
-
 
 /*
     ---------------------------------------------------------
@@ -37,8 +12,6 @@ strong {
     text-align: center;
     padding: 1em;
 }
-
-
 
 
 /*
@@ -58,13 +31,14 @@ strong {
     padding-left: 2em;
     flex-wrap: wrap;
 }
-       
+
     .navbar a {
+        display: flex;
         color: #f2f2f2;
         text-decoration: none;
         padding: 0.5em 1em;
-        text-align: center;
-        
+        flex-grow: 0;
+        justify-content: center;
     }
 
         .navbar a:hover {
@@ -72,12 +46,7 @@ strong {
             color: var(--background-color-1);
         }
 
-    .navbar search-container {
-        justify-content: flex-end;
-    }
-
-
-
+    
 
 
 /*
@@ -86,10 +55,14 @@ strong {
     ---------------------------------------------------------
 */
 #search-container {
-    margin-right: 3em;
+    position: relative;
+    justify-content: center;
+    margin-right: 2em;
     margin-left: auto; /* push bar to the right */
     max-width: 300px;
     width: 100%;
+    
+    color: var(--background-color-0);
 }
 
 #search-box {
@@ -109,7 +82,7 @@ strong {
 
 #search-results {
     list-style: none;
-    margin: 10px 0 0;
+    margin: 0;
     padding: 0;
     background: var(--background-color-1);
     border: 1px solid var(--color-silver);
@@ -118,6 +91,11 @@ strong {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s, visibility 0s 0.5s;
+    position: absolute; /* This ensures the search results are positioned over the page */
+    top: 100%; /* Position them directly below the search box */
+    left: 0; /* Align with the left edge of the search container */
+    right: 0; /* Make the width match the search box */
+    z-index: 999; /* Ensure the results are on top of other content */
 }
 
     #search-results.show {
@@ -151,115 +129,60 @@ strong {
     ------------------ MAIN CONTAINER -----------------------
     ---------------------------------------------------------
 */
+
 .main-container {
-    /*
     display: flex;
-    min-height: 100vh;
-    border: dotted 3px #e500ff; 
-    overflow: hidden;
     width: 100%;
-    */
-    display: grid;
-    grid-template-rows: 250px 1fr;
-    width: 100%;
-    border: dotted 3px #e500ff;
-   
-    transition: grid-template-columns 0.3s ease; /* Smooth transition for the grid */
+    height: 100%;
 }
 
-    .main-container .collapsed {
-        grid-template-columns: 0 1fr; /* When collapsed, sidebar takes no space */
+.sidebar {
+    position: sticky;
+    padding-top: 1em;
+
+    top: 60px;
+    width: 250px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    background-color: var(--background-color-1);
+    color: white;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+    width: 0;
+    overflow-y: hidden;
+}
+
+.article-content {
+    flex: 1;
+    padding: 2em 2.5em;
+    transition: margin-left 0.3s ease-in-out;
+    overflow-y: auto;
+}
+
+    .article-content.expanded {
+        margin-left: 0;
     }
 
 .toggle-button {
     position: fixed;
-    padding-top: 16px;
-    top: calc(var(--header-height) + var(--navbar-height) + 16px);
-    left: 260px;
-    z-index: 1000;
     width: 32px;
     height: 32px;
-    background-color: var(--background-color-1);
-    transition: left 0.3s ease;
+    z-index: 999;
+    left: 236px;
+    transition: left 0.3s ease-in-out;
 }
 
-
-    /* Article content */
-.article-content {
-    /*
-    border: dotted 3px #e1f200;
-    flex: 1;
-    padding: 1em;
-    overflow: auto;
-    background-color: #303033; 
-    transition: margin-left 0.3s ease;
-    */
-    grid-column: 2;
-    
-    background-color: #303033;
-    padding: 1em;
-    height: 100%;
-}
 /*
-.main-container.sidebar-collapsed {
-    flex-direction: column;
-}
-
-.sidebar.collapsed ~ .article-content {
-    flex: 1;
-}
-
-.main-container.sidebar-collapsed .article-content {
-    margin-left: 0;
-    left: 0;
-}
-*/
-
-
-    /*
     ---------------------------------------------------------
-    ------------------ SIDE BAR -----------------------------
+    ------- SIDEBAR - TABLE OF CONTENT ----------------------
     ---------------------------------------------------------
 */
-.sidebar {
-    /*
-    flex: 0 0 250px;
-    background-color: var(--background-color-2);
-    color: var(--color-white);
-    padding: 1em;
-    overflow-y: auto;
-    position: sticky;
-    top: 0;
-    border: dashed 4px #22ff00;
-    left: 0;
-    height: 100vh;
-    z-index: 9;
-    transition: transform 0.3s ease;
-    */
-    width: 250px;
-    transition: width 0.3s ease;
-    background-color: var(--background-color-2);
-    color: var(--color-white);
-    padding: 1em;
-    overflow-y: auto;
-    position: sticky;
-    border: dashed 4px #22ff00;
-    left: 0;
-    height: 100vh;
-    z-index: 9;
-    transition: transform 0.3s ease;
-}
-
-    .sidebar.collapsed {
-        transform: translateX(-100%);
-        width: 0;
-        overflow: hidden;
-    }
-
-/* Table of contents styles */
 #toc ul {
     list-style-type: none;
-    padding-left: 0;
+    padding-left: 1em;
     margin-top: 2em; /* Add space below the toggle button */
 }
 
@@ -269,67 +192,13 @@ strong {
 
 #toc a {
     text-decoration: none;
-    color: #2d3b55;
+    color: var(--color-silver);
     font-size: 16px;
 }
 
     #toc a:hover {
         color: #ff9839;
     }
-
-
-
-
-/*
-    ---------------------------------------------------------
-    -------------------- FOOTER -----------------------------
-    ---------------------------------------------------------
-*/
-.footer {
-    border:dotted 2px #ff0a0a;
-    background-color: var(--background-color-2);
-    color: var(--color-silver);
-    text-align: center;
-    padding: 1em;
-    margin-top: auto; /* Push footer to the bottom */
-}
-
-
-
-
-/*
-    ---------------------------------------------------------
-    --------------- BACK-TO-TOP -----------------------------
-    ---------------------------------------------------------
-*/
-#back-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--color-yellow);
-    color: var(--background-color-1);
-    border: none;
-    border-radius: 50%;
-    padding: 10px 15px;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 1000;
-}
-
-    #back-to-top:hover {
-        background-color: var(--color-red);
-        color: var(--color-white);
-    }
-
-    #back-to-top.show {
-        display: block;
-        opacity: 1;
-        transform: scale(1);
-    }
-
 
 
 /*
@@ -373,6 +242,12 @@ strong {
     background-size: contain;
 }
 
+.video-thumbnail {
+    border: 2px solid #f00; /* Red border to highlight video */
+    background-color: #000;
+    border-radius: 5px;
+}
+
 .lightbox {
     display: none;
     position: fixed;
@@ -387,8 +262,8 @@ strong {
 }
 
     .lightbox img, .lightbox iframe {
-        max-width: 90%;
-        max-height: 90%;
+        max-width: 100%;
+        max-height: 100%;
     }
 
     .lightbox .close, .lightbox .prev, .lightbox .next {
@@ -416,3 +291,52 @@ strong {
     .lightbox .next {
         right: 10px;
     }
+
+
+
+/*
+    ---------------------------------------------------------
+    --------------- BACK-TO-TOP -----------------------------
+    ---------------------------------------------------------
+*/
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-yellow);
+    color: var(--background-color-1);
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+}
+
+    #back-to-top:hover {
+        background-color: var(--color-red);
+        color: var(--color-white);
+    }
+
+    #back-to-top.show {
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+
+/*
+    ---------------------------------------------------------
+    -------------------- FOOTER -----------------------------
+    ---------------------------------------------------------
+*/
+.footer {
+    background-color: var(--background-color-2);
+    color: var(--color-silver);
+    text-align: center;
+    padding: 1em;
+    margin-top: auto; /* Push footer to the bottom */
+}

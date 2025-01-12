@@ -4,11 +4,13 @@
 
 layout: home
 ---
-This is the home page
+
+Topics:
 
 - [Medisin](/medisin/)
 - [Orto](/orto/)
 - [Gastro](/gastro/)
+- [KOLS](/kols/)
 - [About](/about/)
 
 # Header 1

@@ -1,0 +1,27 @@
+:root {
+    --background-color-0: #23262d;
+    --background-color-1: #282b30;
+    --background-color-2: #383b43;
+    --color-yellow: #ffd183;
+    --color-red: #ff8383;
+    --color-silver: #bbbbbb;
+    --color-white: #d7d7d7;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color-0);
+    color: var(--color-white);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-yellow);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
