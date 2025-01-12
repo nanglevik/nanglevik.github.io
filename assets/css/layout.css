@@ -39,6 +39,8 @@
         padding: 0.5em 1em;
         flex-grow: 0;
         justify-content: center;
+
+        border-radius: 1em;
     }
 
         .navbar a:hover {
@@ -61,17 +63,19 @@
     margin-left: auto; /* push bar to the right */
     max-width: 300px;
     width: 100%;
-    
-    color: var(--background-color-0);
+    font-size: 14px;
 }
 
 #search-box {
+    max-width: 300px;
     width: 100%;
     padding: 8px;
     font-size: 12px;
     border: 1px solid var(--color-silver);
     border-radius: 1em;
     transition: border-color 0.5s ease, box-shadow 0.5s ease;
+    background-color: var(--background-color-0);
+    color: var(--color-white);
 }
 
     #search-box:focus {
@@ -81,6 +85,9 @@
     }
 
 #search-results {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -88,6 +95,7 @@
     border: 1px solid var(--color-silver);
     border-radius: 1em;
     max-height: 300px;
+    overflow-y: auto;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s, visibility 0s 0.5s;
@@ -117,6 +125,8 @@
         text-decoration: none;
         color: var(--color-yellow);
         pointer-events: auto;
+        
+        
     }
 
         #search-results a:hover {
@@ -145,8 +155,8 @@
     height: calc(100vh - 60px);
     overflow-y: auto;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
-    background-color: var(--background-color-1);
-    color: white;
+    background-color: var(--background-color-0);
+    color: var(--color-white);
 }
 
 .sidebar.collapsed {
@@ -160,10 +170,26 @@
     padding: 2em 2.5em;
     transition: margin-left 0.3s ease-in-out;
     overflow-y: auto;
+
+    background-color: var(--background-color-1);
+    color: var(--color-silver);
 }
 
     .article-content.expanded {
         margin-left: 0;
+    }
+
+    .article-content img {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 1em;
+        border: solid 2px var(--color-white);
+    }
+    .article-content iframe {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 1em;
+        border: solid 2px var(--color-white);
     }
 
 .toggle-button {
@@ -192,7 +218,7 @@
 
 #toc a {
     text-decoration: none;
-    color: var(--color-silver);
+    color: var(--color-white);
     font-size: 16px;
 }
 
@@ -339,4 +365,105 @@
     text-align: center;
     padding: 1em;
     margin-top: auto; /* Push footer to the bottom */
+}
+
+
+/*
+    ---------------------------------------------------------
+    ------------ ARTICLES_PAGE LAYOUT -----------------------
+    ---------------------------------------------------------
+*/
+
+/* Center the main title */
+.articles-page-title {
+    width: 100%; /* Ensures it takes up the full width */
+    text-align: center; /* Centers the title */
+    margin: 20px; /* Adds space below the title */
+}
+
+    .articles-page-title h1 {
+        margin: 0; /* Removes default margin */
+    }
+
+/* Container for the entire page content */
+.articles-page-content-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping if there isn't enough space */
+    gap: 20px; /* Adds space between each box */
+    justify-content: center; /* Centers the boxes in the container */
+    align-items: flex-start; /* Aligns items to the top of the container */
+    margin: 0 auto; /* Centers the container itself */
+
+
+}
+
+/* Article Category Box */
+.article-category {
+    background-color: var(--background-color-2);
+    padding: 20px; /* Adds padding inside each box */
+    box-sizing: border-box; /* Ensures padding is included in the width calculation */
+    border-radius: 5px; /* Optional: Rounds the corners of each box */
+    border: 2px solid #ccc; /* Border around the box */
+    margin-bottom: 20px; /* Adds space between categories */
+    flex: 1 1 calc(33.33% - 20px); /* Each box will take up 1/3 of the container width, minus the gap */
+}
+
+/* Heading inside the article category box */
+.articles-page-content-container h2 {
+    margin: 0; /* Removes default margins */
+    text-align: center; /* Optional: centers the text */
+    padding: 10px; /* Padding around the heading for spacing */
+    background-color: var(--background-color-1);
+    border-radius: 5px; /* Optional: rounded corners */
+}
+
+/* List inside the article category box */
+.articles-page-content-container ul {
+    width: 100%; /* Ensures the list takes up the full width */
+    padding-left: 20px; /* Adds padding to the left of the list */
+    list-style-type: none; /* Optional: removes the bullet points */
+}
+
+/* List items inside the category box */
+.articles-page-content-container li {
+    padding: 1em; /* Padding inside each list item */
+    border-radius: 1em;
+}
+
+    .articles-page-content-container li:hover {
+        background-color: var(--background-color-1);
+    }
+
+/* Make links take up the full width and center their text */
+.articles-page-content-container a {
+    display: block; /* Makes the link a block-level element */
+    width: 100%; /* Ensures the link takes up the full width of the parent */
+    text-align: center; /* Centers the text within the link */
+    text-decoration: none; /* Optional: Removes underline from links */
+}
+
+/* Center the .article-category boxes */
+.articles-page-content-container .article-category {
+    display: flex;
+    flex-direction: column; /* Stacks heading and list vertically */
+    width: calc(33.33% - 20px); /* Makes each box take up 1/3 of the container width */
+    box-sizing: border-box; /* Ensures padding is included in the width calculation */
+    padding: 20px; /* Adds padding inside the box */
+    border: 2px solid #ccc; /* Border around the box */
+    border-radius: 8px; /* Optional: rounded corners */
+    margin-bottom: 20px; /* Adds space between categories */
+    align-items: center; /* Centers the items (heading and links) horizontally */
+    justify-content: flex-start; /* Aligns the items to the top */
+}
+/* Optional: Make sure smaller screens handle the wrapping nicely */
+@media (max-width: 768px) {
+    .article-category {
+        flex: 1 1 calc(50% - 20px); /* 2 boxes per row for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .article-category {
+        flex: 1 1 100%; /* Stacks the boxes vertically on very small screens */
+    }
 }

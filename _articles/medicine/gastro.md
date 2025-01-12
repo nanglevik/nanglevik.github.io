@@ -1,7 +1,6 @@
 ---
 layout: article
 title: Gastro
-permalink: /gastro/
 date: 2025-01-10
 ---
 

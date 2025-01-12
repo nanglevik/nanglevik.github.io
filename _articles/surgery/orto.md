@@ -1,7 +1,6 @@
 ---
 layout: article
 title: Orto
-permalink: /orto/
 date: 2025-01-05
 ---
 
@@ -18,7 +17,6 @@ lol
 ## Skafoidfraktur {#skafoidfraktur}
 
 **Herbert & Fisher klassifikasjon**  
-![][image1]
 
 Type A ⇒ stabile, udislokerte  
 Type B ⇒ ustabile, dislokerte
@@ -34,9 +32,9 @@ Standard er skafoidgips med kontroll uten gips etter 6 uker. Tuberkelfrakturene 
 
 Skafoidgipses med plast eller kalk:
 
-* [Skafoid plastgips](https://www.youtube.com/watch?v=ff30JwvERrg)
+<iframe width="822" height="462" src="https://www.youtube.com/embed/ff30JwvERrg" title="Skafoid plastgips" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-* [Skafoid kalklaske](https://www.youtube.com/watch?v=NjT1aD5FG6k)
+<iframe width="822" height="462" src="https://www.youtube.com/embed/NjT1aD5FG6k" title="Skafoid kalklaske" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 **Operativ behandling** *(type B-D)*
 
@@ -61,8 +59,6 @@ Ved pasienter med hodetraume er det viktig med oversikt på følgende:
 * Bevisstløs eller har mistet bevisstheten? \- før eller etter skaden?  
 * Oppkast? \- Hvor mange ganger?  
 * Shuntbehandling? (hydrocephalus)
-
-**Scandinavian Neurotrauma Committe**![][image2]
 
 ---
 

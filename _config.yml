@@ -18,7 +18,7 @@ github_username:  nanglevik
 collections:
    articles:
       output: true
-      permalink: /:title/
+      permalink: /:path/:title/
 
 # Build settings
 theme: minima

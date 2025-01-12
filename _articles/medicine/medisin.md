@@ -1,7 +1,6 @@
 ---
 layout: article
 title: Medisin
-permalink: /medisin/
 date: 2025-01-08
 ---
 

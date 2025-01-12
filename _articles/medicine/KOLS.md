@@ -1,7 +1,6 @@
 ---
 layout: article
 title: KOLS
-permalink: /kols/
 date: 2025-01-10
 ---
 

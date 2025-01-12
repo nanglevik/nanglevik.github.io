@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
         <p>This is the 'home' layout</p>
         <p>Last edited {{ page.date }}</p>
 
-        
+
     </header>
 
     <nav class="navbar">
@@ -31,12 +31,12 @@
 
     <!-- MAIN CONTENT CONTAINER -->
     <div class="main-container">
-        <div class="article-content">
+        <div class="articles-page-content-container">
             {{ content }} <!-- This is where the content of index.md will be inserted -->
         </div>
     </div>
 
-  
+
 
 
 
@@ -54,8 +54,7 @@
 
     <!-- Back-to-top button -->
     <button id="back-to-top" title="Go to top">⬆</button>
-    <script>
-        const backToTopButton = document.getElementById('back-to-top');
+    <script>const backToTopButton = document.getElementById('back-to-top');
 
         // Show or hide the button based on scroll position
         window.addEventListener('scroll', () => {
@@ -72,8 +71,7 @@
                 top: 0,
                 behavior: 'smooth' // Smooth scrolling
             });
-        });
-    </script>
+        });</script>
 
 </body>
 </html>
