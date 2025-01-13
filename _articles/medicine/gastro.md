@@ -2,6 +2,7 @@
 layout: article
 title: Gastro
 date: 2025-01-10
+permalink: /medicine/gastro/
 ---
 
 # Internal Medicine:Gastroenterology

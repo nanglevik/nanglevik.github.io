@@ -8,10 +8,10 @@ date: 2025-01-10
 
 Topics:
 
-- [Medisin](/medisin/)
-- [Orto](/orto/)
-- [Gastro](/gastro/)
-- [KOLS](/kols/)
+- [Medisin](/medicine/medisin/)
+- [Orto](/surgery/orto/)
+- [Gastro](/medicine/gastro/)
+- [KOLS](/medicine/kols/)
 - [About](/about/)
 
 # Header 1
