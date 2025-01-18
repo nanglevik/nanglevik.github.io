@@ -15,6 +15,7 @@ date: 2025-01-05
 	<li><a href="/medicine/medisin/">Medisin</a></li>
 	<li><a href="/medicine/gastro/">Gastro</a></li>
 	<li><a href="/medicine/kols/">KOLS</a></li>
+	<li><a href="/medicine/sepsis/">Sepsis</a></li>
   </ul>
 </div>
 

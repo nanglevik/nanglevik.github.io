@@ -25,7 +25,7 @@
         </div>
     </nav>
 
-    <div class="main-container">
+    <main class="main-container">
         <button class="toggle-button" id="toggle-sidebar"><<</button>
 
         <aside class="sidebar" id="sidebar">
@@ -39,9 +39,9 @@
         </aside>
 
         <div class="article-content">
-            {{ content }} <!-- This is where the content of index.md will be inserted -->
+            {{ content }} <!-- This is where the content of .md will be inserted -->
         </div>
-    </div>
+    </main>
 
     <script>
         const toggleButton = document.querySelector(".toggle-button");

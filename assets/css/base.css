@@ -2,6 +2,11 @@
     --background-color-0: #23262d;
     --background-color-1: #282b30;
     --background-color-2: #383b43;
+
+    --color-white-0: #e6e6e6;
+    --color-white-1: #aaaaaa;
+    --color-orange-0: #eeb44c;
+    --color-orange-1: #a78a57;
     --color-yellow: #ffd183;
     --color-red: #ff8383;
     --color-silver: #bbbbbb;
@@ -25,3 +30,7 @@ a:hover {
     text-decoration: underline;
 }
 
+img {
+    filter:brightness(0.8);
+    filter:contrast(1.2);
+}
