@@ -48,7 +48,7 @@ permalink: /medicine/medisin/
 # Smertelindring
 Konverteringstabell opioid - fra Norsk legemiddelhåndbok
 
-![Konverteringstabell](/assets/images/konverteringstabell_opioid_NLH.png/)
+![Konverteringstabell](/assets/images/konverteringstabell_opioid_NLH.png)
 
 **DOAK – medisiner:**  
 DOAK er en gruppe blodfortynnende legemidler, det vil si at de reduserer blodets evne til å koagulere. Disse legemidlene brukes til å forebygge eller behandle blodpropper ved hofteledds- og kneleddsprotese, atrieflimmer og venetrombose. DOAK står for 'direktevirkende orale antikoagulasjonsmidler'. Denne gruppen legemidler er alternativer til tradisjonelle antikoagulasjonsmidler som warfarin (handelsnavn Marevan).
