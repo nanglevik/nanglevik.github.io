@@ -19,6 +19,11 @@ collections:
    articles:
       output: true
       permalink: /:path/:title/
+    
+   pages:
+      output: true
+      permalink: /:path/:title/
+   
 
 # Build settings
 theme: minima

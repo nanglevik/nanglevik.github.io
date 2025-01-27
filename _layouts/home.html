@@ -10,24 +10,9 @@
 </head>
 
 <body>
-    <header class="header">
-        <p><strong>{{site.title}}</strong></p>
-        <p>This is the 'home' layout</p>
-        <p>Last edited {{ page.date }}</p>
+    {% include header.html %}
 
-        
-    </header>
-
-    <nav class="navbar">
-        <a href="/">Home</a>
-        <a href="/articles/">Articles</a>
-
-        <div id="search-container">
-            <input type="text" id="search-box" placeholder="Type to search through all articles...">
-            <ul id="search-results"></ul>
-        </div>
-    </nav>
-
+    {% include navbar.html %}
 
     <!-- MAIN CONTENT CONTAINER -->
     <main class="main-container">
@@ -36,15 +21,7 @@
         </div>
     </main>
 
-  
-
-
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <p>&copy; 2025 nanglevik</p>
-    </footer>
-
+    {% include footer.html %}
 
 
     <!-- search bar javascript -->
@@ -53,7 +30,7 @@
 
 
     <!-- Back-to-top button -->
-    <button id="back-to-top" title="Go to top">⬆</button>
+    <button id="back-to-top" title="Go to top">&#8593;</button>
     <script>
         const backToTopButton = document.getElementById('back-to-top');
 

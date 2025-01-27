@@ -3,6 +3,8 @@ layout: article
 title: KOLS
 date: 2025-01-10
 permalink: /medicine/kols/
+category: medisin
+subcategory: pulmonologi
 ---
 
 # Introduksjon

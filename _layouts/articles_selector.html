@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+
+    <link rel="stylesheet" href="{{ "/assets/css/base.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/layout.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/article_selector.css" | relative_url }}">
+</head>
+
+<body>
+    {% include header.html %}
+
+    {% include navbar.html %}
+
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="main-container">
+        <div class="articles-page-content-container">
+            {{ content }} <!-- This is where the content of .md will be inserted -->
+        </div>
+
+    </main>
+
+    <div>
+        <!-- Search Bar -->
+        <input type="text" id="search" placeholder="Søk i fagområder..." oninput="filterArticles()">
+
+        <div id="no-results">No articles found.</div>
+
+
+        <!-- Accordion Structure -->
+        {% assign grouped_articles = site.articles | group_by_exp: "article", "article.category" %}
+
+        {% for category in grouped_articles %}
+        <div class="article-category">
+            <!-- Category Header -->
+            <button class="article-category-header" onclick="toggleCategory(this)">
+                {{ category.name | capitalize }}
+            </button>
+
+            <!-- Subcategories Loop -->
+            <div class="article-subcategories">
+                {% assign subcategories = category.items | group_by_exp: "article", "article.subcategory" %}
+                {% for subcategory in subcategories %}
+                <div class="article-subcategory">
+                    <!-- Subcategory Header -->
+                    <button class="article-subcategory-header" onclick="toggleSubcategory(this)">
+                        {{ subcategory.name | capitalize }}
+                    </button>
+
+                    <!-- Articles List for Subcategory -->
+                    <ul class="articles-list">
+                        {% for article in subcategory.items %}
+                        <li class="article-item" data-title="{{ article.title | downcase }}">
+                            <a href="{{ article.url }}">{{ article.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <script>
+        // Toggle visibility of a category
+        function toggleCategory(button) {
+            const list = button.nextElementSibling.querySelector('.article-subcategories'); // Get the subcategories
+            if (list.classList.contains('visible')) {
+                list.classList.remove('visible'); // Collapse the subcategories
+                list.style.display = 'none';
+            } else {
+                list.classList.add('visible'); // Expand the subcategories
+                list.style.display = 'block';
+            }
+        }
+
+        // Toggle visibility of a subcategory
+        function toggleSubcategory(button) {
+            const list = button.nextElementSibling; // Get the articles list for the subcategory
+            if (list.classList.contains('visible')) {
+                list.classList.remove('visible'); // Collapse the list of articles
+                list.style.display = 'none';
+            } else {
+                list.classList.add('visible'); // Expand the list of articles
+                list.style.display = 'block';
+            }
+        }
+
+        function filterArticles() {
+            const searchInput = document.getElementById('search').value.toLowerCase().trim(); // Get the search term
+            const categories = document.querySelectorAll('.article-category'); // Get all categories
+            let foundAny = false; // Track if we found any matching articles
+
+            // If search is empty, show everything
+            if (searchInput === '') {
+                categories.forEach(category => {
+                    category.style.display = 'block'; // Show all categories
+                    const subcategories = category.querySelectorAll('.article-subcategory');
+                    subcategories.forEach(subcategory => {
+                        subcategory.style.display = 'block'; // Show all subcategories
+                        const list = subcategory.querySelector('.articles-list');
+                        list.style.display = 'block'; // Show articles list
+                        const articlesInSubcategory = subcategory.querySelectorAll('.article-item');
+                        articlesInSubcategory.forEach(article => {
+                            article.style.display = 'block'; // Show all articles
+                        });
+                    });
+                });
+                document.getElementById('no-results').style.display = 'none'; // Hide no results message
+                return; // No filtering needed when search is empty
+            }
+
+            // Loop through all categories and process
+            categories.forEach(category => {
+                const subcategories = category.querySelectorAll('.article-subcategory');
+                let categoryHasVisibleSubcategory = false;
+
+                subcategories.forEach(subcategory => {
+                    const articlesInSubcategory = subcategory.querySelectorAll('.article-item');
+                    let subcategoryHasVisibleArticles = false;
+
+                    // Loop through articles in the subcategory
+                    articlesInSubcategory.forEach(article => {
+                        const title = article.getAttribute('data-title') ? article.getAttribute('data-title').toLowerCase() : ''; // Ensure data-title exists
+                        if (title.includes(searchInput)) {
+                            article.style.display = 'block'; // Show matching article
+                            subcategoryHasVisibleArticles = true; // Mark this subcategory as having visible articles
+                            foundAny = true; // Track we found at least one matching article
+                        } else {
+                            article.style.display = 'none'; // Hide non-matching articles
+                        }
+                    });
+
+                    // Show or hide subcategory based on matching articles
+                    if (subcategoryHasVisibleArticles) {
+                        subcategory.style.display = 'block'; // Show subcategory
+                        const list = subcategory.querySelector('.articles-list');
+                        list.style.display = 'block'; // Show articles list
+                    } else {
+                        subcategory.style.display = 'none'; // Hide subcategory
+                        const list = subcategory.querySelector('.articles-list');
+                        list.style.display = 'none'; // Hide articles list
+                    }
+
+                    // Mark category as visible if this subcategory has visible articles
+                    if (subcategoryHasVisibleArticles) {
+                        categoryHasVisibleSubcategory = true;
+                    }
+                });
+
+                // Show or hide the category based on subcategory visibility
+                if (categoryHasVisibleSubcategory) {
+                    category.style.display = 'block'; // Show category
+                } else {
+                    category.style.display = 'none'; // Hide category if no subcategories have visible articles
+                }
+            });
+
+            // Show "No Results" if no matching articles are found
+            const noResultsMessage = document.getElementById('no-results');
+            if (!foundAny) {
+                noResultsMessage.style.display = 'block'; // Show no results message
+            } else {
+                noResultsMessage.style.display = 'none'; // Hide no results message
+            }
+        }
+
+    </script>
+
+    {% include footer.html %}
+
+
+    <!-- search bar javascript -->
+    <script src="/assets/js/lunr.min.js"></script>
+    <script src="/assets/js/search.js"></script>
+
+
+    <!-- Back-to-top button -->
+    <button id="back-to-top" title="Go to top">&#8593;</button>
+    <script>
+        const backToTopButton = document.getElementById('back-to-top');
+
+        // Show or hide the button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 160) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        // Scroll to the top when the button is clicked
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scrolling
+            });
+        });</script>
+
+    <script>
+        function toggleCategory(button) {
+            const list = button.nextElementSibling; // Get the corresponding `.articles-list`
+
+            if (list.classList.contains('visible')) {
+                list.classList.remove('visible'); // Collapse if already expanded
+                list.style.display = 'none'; // Hide the list
+            } else {
+                list.classList.add('visible'); // Expand if collapsed
+                list.style.display = 'block'; // Show the list
+            }
+        }
+
+        function filterArticles() {
+            const searchInput = document.getElementById('search').value.toLowerCase(); // Get search term
+            const articles = document.querySelectorAll('.article-item'); // All articles
+            const categories = document.querySelectorAll('.article-category'); // All categories
+            let found = false;
+
+            // Filter articles
+            articles.forEach(article => {
+                const title = article.getAttribute('data-title');
+                const category = article.closest('.article-category');
+
+                if (title.includes(searchInput)) {
+                    article.style.display = 'block'; // Show matching articles
+                    found = true;
+
+                    // Expand all parent categories
+                    let parent = category;
+                    while (parent) {
+                        const list = parent.querySelector('.articles-list');
+                        list.classList.add('visible'); // Ensure it's expanded
+                        list.style.display = 'block'; // Show the list
+                        parent = parent.parentElement.closest('.article-category'); // Go to parent
+                    }
+                } else {
+                    article.style.display = 'none'; // Hide non-matching articles
+                }
+            });
+
+            // Hide empty categories
+            categories.forEach(category => {
+                const articlesInCategory = category.querySelectorAll('.article-item');
+                const isVisible = Array.from(articlesInCategory).some(article => article.style.display === 'block');
+                const list = category.querySelector('.articles-list');
+
+                if (isVisible) {
+                    category.style.display = 'block'; // Show category
+                    list.classList.add('visible'); // Ensure it's expanded
+                    list.style.display = 'block';
+                } else {
+                    category.style.display = 'none'; // Hide category
+                    list.classList.remove('visible'); // Collapse if empty
+                    list.style.display = 'none';
+                }
+            });
+
+            // Show "No Results" if no articles match
+            document.getElementById('no-results').style.display = found ? 'none' : 'block';
+        }
+    </script>
+
+</body>
+</html>

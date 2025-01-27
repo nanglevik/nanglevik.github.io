@@ -7,14 +7,10 @@ date: 2025-01-10
 ---
 
 Topics:
-
-- [Medisin](/medicine/medisin/)
-- [Orto](/surgery/orto/)
-- [Gastro](/medicine/gastro/)
-- [KOLS](/medicine/kols/)
 - [About](/about/)
 
 # Header 1
 apsdfasdf
+
 ## Header 2
 awr

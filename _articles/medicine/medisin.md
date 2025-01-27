@@ -3,6 +3,8 @@ layout: article
 title: Medisin
 date: 2025-01-08
 permalink: /medicine/medisin/
+category: medisin
+subcategory: generelt
 ---
 
 * Sepsis  

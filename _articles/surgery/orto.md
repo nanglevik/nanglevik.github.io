@@ -3,6 +3,8 @@ layout: article
 title: Orto
 date: 2025-01-05
 permalink: /surgery/orto/
+category: kirurgi
+subcategory: ortopedi
 ---
 
 # Ortopedi

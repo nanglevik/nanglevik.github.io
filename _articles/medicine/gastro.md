@@ -3,6 +3,8 @@ layout: article
 title: Gastro
 date: 2025-01-10
 permalink: /medicine/gastro/
+category: medisin
+subcategory: gastroenterologi
 ---
 
 # Internal Medicine:Gastroenterology

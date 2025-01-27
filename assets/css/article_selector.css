@@ -1,0 +1,195 @@
+/*
+    --background-color-0: #23262d;
+    --background-color-1: #282b30;
+    --background-color-2: #383b43;
+
+    --color-white-0: #e6e6e6;
+    --color-white-1: #aaaaaa;
+    --color-orange-0: #eeb44c;
+    --color-orange-1: #a78a57;
+    --color-yellow: #ffd183;
+    --color-red: #ff8383;
+    --color-silver: #bbbbbb;
+    --color-white: #d7d7d7;
+*/
+
+/* Search Bar */
+#search {
+    margin-left: 25%;
+    margin-right: auto;
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid var(--color-orange-0);
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+/* "No Results" Message */
+#no-results {
+    display: none;
+    color: #f00;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-left: 45%;
+    margin-right: auto;
+}
+
+/* Container for article categories (2 per row) */
+.article_selector-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Two per row (adjust size based on your layout needs) */
+    gap: 16px; /* Space between items */
+    padding: 16px; /* Padding around the container */
+    width: 100%;
+}
+
+/* Article Category Styling */
+.article-category {
+    margin-bottom: 20px;
+    background-color: var(--background-color-2); /* Block color */
+    border-radius: 8px; /* Round edges */
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Full width of the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for 3D effect */
+}
+
+/* Category header styling */
+.article-category-header {
+    cursor: pointer;
+    padding: 20px;
+    font-size: 18px;
+    background-color: var(--background-color-1); /* Background for header */
+    color: var(--color-white-0);
+    border: none;
+    text-align: left;
+    width: 100%; /* Full width of the category */
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+    .article-category-header:hover {
+        background-color: var(--color-orange-0); /* Highlight color */
+        color: #000000;
+    }
+
+/* Articles List Styling (Initially hidden) */
+.articles-list {
+    padding: 15px;
+    background-color: var(--background-color-2);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: none; /* Initially hidden */
+}
+
+    .articles-list.visible {
+        display: block; /* Show articles when visible */
+        list-style: none !important; /* Ensure bullet points are removed */
+        padding-left: 0 !important; /* Remove any indentation */
+    }
+
+/* Article Item Styling */
+.article-item {
+    padding: 10px;
+    font-size: 16px;
+    text-align: left;
+    background-color: var(--background-color-1);
+    margin: 5px 0;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+    .article-item:hover {
+        background-color: var(--color-orange-0); /* Highlight color */
+    }
+
+    .article-item a {
+        color: var(--color-white-0);
+        text-decoration: none;
+        
+        display: block;
+
+    }
+
+        .article-item a:hover {
+            color: var(--color-white-0); /* Ensure link hover color stays the same */
+        }
+
+/* Subcategory Styling (Hidden by default) */
+.article-subcategories {
+    display: none; /* Hide subcategories by default */
+    padding: 15px;
+    font-size: 16px;
+    text-align: left;
+    background-color: var(--background-color-1);
+    margin: 5px 0;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    margin-left: 20px; /* Indent subcategories */
+}
+
+/* Subcategory Header Styling */
+.article-subcategory-header {
+    cursor: pointer;
+    padding: 18px;
+    font-size: 20px; /* Increased font size */
+    background-color: var(--background-color-1);
+    color: var(--color-white-0);
+    border: none;
+    text-align: left;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+    transition: background-color 0.3s ease;
+}
+
+    .article-subcategory-header:hover {
+        background-color: var(--color-orange-0); /* Highlight on hover */
+        color: #000000;
+    }
+
+/* Articles List for Subcategory */
+.articles-list-subcategory {
+    padding: 15px;
+    background-color: var(--background-color-2);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: none; /* Initially hidden */
+    margin-left: 40px; /* Indent articles under subcategory */
+}
+
+    .articles-list-subcategory.visible {
+        display: block; /* Show articles when visible */
+        list-style: none !important; /* Remove bullets */
+        padding-left: 0 !important; /* Remove indentation */
+    }
+
+    .article-subcategories .article-item {
+        margin-left: 20px;
+        padding-left: 20px;
+    }
+
+/* Remove list bullets */
+.articles-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Responsive: Stack categories in a single column on smaller screens */
+@media (max-width: 768px) {
+    .article_selector-container {
+        grid-template-columns: 1fr; /* Stack all categories in a single column */
+    }
+
+    /* Adjust category styling for mobile */
+    .article-category-header {
+        font-size: 16px; /* Smaller font size on mobile */
+    }
+
+    .articles-list h4 {
+        font-size: 1.1em; /* Slightly smaller font for subcategories */
+    }
+}
