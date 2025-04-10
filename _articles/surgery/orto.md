@@ -5,6 +5,7 @@ date: 2025-01-05
 permalink: /surgery/orto/
 category: kirurgi
 subcategory: ortopedi
+topicgroup: frakturer
 ---
 
 # Ortopedi

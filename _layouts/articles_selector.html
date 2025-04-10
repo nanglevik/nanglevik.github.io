@@ -30,42 +30,80 @@
 
         <div id="no-results">No articles found.</div>
 
+        <div class="article-selector-main">
+            <!-- Accordion Structure -->
+            {% assign grouped_categories = site.articles | group_by_exp: "article", "article.category" %}
+            {% for category in grouped_categories %}
+            <div class="article-category">
+                <button class="accordion-toggle category-toggle" onclick="toggleAccordion(this)">
+                    {{ category.name | capitalize }}
+                </button>
 
-        <!-- Accordion Structure -->
-        {% assign grouped_articles = site.articles | group_by_exp: "article", "article.category" %}
+                <div class="accordion-content">
+                    {% assign subcategories = category.items | group_by_exp: "article", "article.subcategory" %}
+                    {% for subcategory in subcategories %}
+                    <div class="article-subcategory">
+                        <button class="accordion-toggle subcategory-toggle" onclick="toggleAccordion(this)">
+                            {{ subcategory.name | capitalize }}
+                        </button>
 
-        {% for category in grouped_articles %}
-        <div class="article-category">
-            <!-- Category Header -->
-            <button class="article-category-header" onclick="toggleCategory(this)">
-                {{ category.name | capitalize }}
-            </button>
-
-            <!-- Subcategories Loop -->
-            <div class="article-subcategories">
-                {% assign subcategories = category.items | group_by_exp: "article", "article.subcategory" %}
-                {% for subcategory in subcategories %}
-                <div class="article-subcategory">
-                    <!-- Subcategory Header -->
-                    <button class="article-subcategory-header" onclick="toggleSubcategory(this)">
-                        {{ subcategory.name | capitalize }}
-                    </button>
-
-                    <!-- Articles List for Subcategory -->
-                    <ul class="articles-list">
-                        {% for article in subcategory.items %}
-                        <li class="article-item" data-title="{{ article.title | downcase }}">
-                            <a href="{{ article.url }}">{{ article.title }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                        <div class="accordion-content">
+                            {% assign topicgroups = subcategory.items | group_by_exp: "article", "article.topicgroup" %}
+                            {% for topicgroup in topicgroups %}
+                            {% if topicgroup.name %}
+                            <div class="article-topicgroup">
+                                <button class="accordion-toggle topicgroup-toggle" onclick="toggleAccordion(this)">
+                                    {{ topicgroup.name | capitalize }}
+                                </button>
+                                {% endif %}
+                                <div class="accordion-content">
+                                    <ul class="articles-list">
+                                        {% for article in topicgroup.items %}
+                                        <li class="article-item" data-title="{{ article.title | downcase }}">
+                                            <a href="{{ article.url }}">{{ article.title }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% if topicgroup.name %}
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
 
     </div>
+
+
+    <script>
+        function toggleAccordion(button) {
+            button.classList.toggle("open");
+            const content = button.nextElementSibling;
+            if (content) content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+
+        function filterArticles() {
+            const search = document.getElementById("search").value.toLowerCase();
+            const items = document.querySelectorAll(".article-item");
+            let anyVisible = false;
+
+            items.forEach(item => {
+                const title = item.dataset.title;
+                const match = title.includes(search);
+                item.style.display = match ? "list-item" : "none";
+                if (match) anyVisible = true;
+            });
+
+            document.getElementById("no-results").style.display = anyVisible ? "none" : "block";
+        }
+    </script>
+
+
 
     <script>
         // Toggle visibility of a category

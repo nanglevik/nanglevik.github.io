@@ -52,16 +52,21 @@
 
         });
 
-        document.addEventListener("scroll", () => {
+
+        document.addEventListener("DOMContentLoaded", () => {
             const navbar = document.querySelector(".navbar");
             const toggleButton = document.querySelector(".toggle-button");
 
-            // Get the bottom position of the navbar
-            const navbarBottom = navbar.getBoundingClientRect().bottom;
+            function updateButtonPosition() {
+                const navbarBottom = navbar.getBoundingClientRect().bottom;
+                toggleButton.style.top = `${navbarBottom + 16}px`;
+            }
 
-            // Set the toggle button's position dynamically
-            toggleButton.style.top = `${navbarBottom + 16}px`;
+            // Run once on page load
+            updateButtonPosition();
 
+            // Also run on scroll
+            document.addEventListener("scroll", updateButtonPosition);
         });
 
 

@@ -5,6 +5,7 @@ date: 2025-01-08
 permalink: /medicine/medisin/
 category: medisin
 subcategory: generelt
+topicgroup: basics
 ---
 
 * Sepsis  

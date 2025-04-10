@@ -5,6 +5,7 @@ date: 2025-01-10
 permalink: /medicine/kols/
 category: medisin
 subcategory: pulmonologi
+topicgroup: KOLS
 ---
 
 # Introduksjon

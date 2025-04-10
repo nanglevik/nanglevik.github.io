@@ -11,6 +11,8 @@
 .header {
     text-align: center;
     padding: 1em;
+    background-color: var(--base-background-layer-1);
+    border-bottom: solid 2px var(--base-border-layer-1);
 }
 
 
@@ -20,7 +22,8 @@
     ---------------------------------------------------------
 */
 .navbar {
-    background-color: var(--background-color-2);
+    background-color: var(--base-background-layer-2);
+    border-bottom: solid 2px var(--base-border-layer-2);
     padding: 0.5em;
     position: sticky;
     top: 0;
@@ -71,17 +74,17 @@
     width: 100%;
     padding: 8px;
     font-size: 12px;
-    border: 1px solid var(--color-silver);
+    background-color: var(--base-background-layer-1);
+    border: solid 2px var(--base-border-layer-1);
     border-radius: 1em;
+    color: var(--base-text-gray);
     transition: border-color 0.5s ease, box-shadow 0.5s ease;
-    background-color: var(--background-color-0);
-    color: var(--color-white);
 }
 
     #search-box:focus {
         outline: none;
-        border-color: var(--color-yellow);
-        box-shadow: 0 0 10px #f8b16eb8;
+        border-color: rgb(226, 159, 87, 0.40);
+        box-shadow: 0 0 6px #f8b16eb8;
     }
 
 #search-results {
@@ -144,19 +147,20 @@
     display: flex;
     width: 100%;
     height: 100%;
+    background-color: var(--base-background-layer-0);
 }
 
 .sidebar {
     position: sticky;
     padding-top: 1em;
-
     top: 60px;
     width: 250px;
     height: calc(100vh - 60px);
     overflow-y: auto;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
-    background-color: var(--background-color-0);
-    color: var(--color-white);
+    background-color: var(--base-background-layer-1);
+    color: var(--base-text-white);
+    border-right: solid 2px var(--base-border-layer-1);
 }
 
 .sidebar.collapsed {
@@ -170,10 +174,48 @@
     padding: 2em 2.5em;
     transition: margin-left 0.3s ease-in-out;
     overflow-y: auto;
-
-    background-color: var(--background-color-1);
-    color: var(--color-silver);
+    background-color: var(--base-background-layer-0);
+    color: var(--base-text-gray);
 }
+
+    .article-content p {
+        margin: 1em;
+        line-height: 1.5;
+    }
+
+    .article-content strong {
+        color: var(--base-text-white);
+        font-weight: bold;    
+    }
+
+    .article-content em {
+        color: var(--base-text-gray);
+        font-style: italic;
+    }
+
+    .article-content h1 {
+        padding-top: 1.5em;
+        color: var(--base-text-white);
+        font-weight: bold;
+    }
+
+    .article-content h2 {
+        color: var(--base-text-white);
+        padding-top: 1em;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .article-content ul, ol {
+        margin-left: 30px;
+    }
+
+    .article-content li {
+        font-size: 1.1em;
+        margin-bottom: 4px;
+    }
+
+
 
     .article-content.expanded {
         margin-left: 0;
@@ -199,6 +241,9 @@
     z-index: 999;
     left: 236px;
     transition: left 0.3s ease-in-out;
+    background-color: var(--base-background-layer-1);
+    border: solid 2px var(--base-border-layer-1);
+    color: var(--base-text-white)
 }
 
 /*
@@ -236,8 +281,8 @@
 .graphic-section {
     margin-top: 20px;
     padding: 10px;
-    background-color: var(--background-color-1);
-    border: 1px solid var(--color-white);
+    background-color: var(--base-background-layer-2);
+    border: 1px solid var(--base-border-layer-2);
     border-radius: 5px;
 }
 
@@ -253,8 +298,8 @@
         max-width: 100%;
         height: auto;
         cursor: pointer;
-        border: 1px solid #ccc;
-        border-radius: 3px;
+        border: 1px solid var(--base-background-layer-2);
+        border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease;
     }
@@ -360,8 +405,9 @@
     ---------------------------------------------------------
 */
 .footer {
-    background-color: var(--background-color-2);
-    color: var(--color-silver);
+    background-color: var(--base-background-layer-1);
+    border-top: solid 2px var(--base-border-layer-1);
+    color: var(--base-text-gray);
     text-align: center;
     padding: 1em;
     margin-top: auto; /* Push footer to the bottom */
