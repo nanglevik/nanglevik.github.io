@@ -12,9 +12,7 @@
 
 <body>
     {% include header.html %}
-
     {% include navbar.html %}
-
 
     <!-- MAIN CONTENT CONTAINER -->
     <main class="main-container">
@@ -28,7 +26,7 @@
         <!-- Search Bar -->
         <input type="text" id="search" placeholder="Søk i fagområder..." oninput="filterArticles()">
 
-        <div id="no-results">No articles found.</div>
+        <div id="no-results">Ingen treff.</div>
 
         <div class="article-selector-main">
             <!-- Accordion Structure -->
@@ -80,135 +78,85 @@
     </div>
 
 
+    <!-- Accordion Toogle -->
     <script>
         function toggleAccordion(button) {
             button.classList.toggle("open");
             const content = button.nextElementSibling;
             if (content) content.style.display = content.style.display === "block" ? "none" : "block";
         }
-
-        function filterArticles() {
-            const search = document.getElementById("search").value.toLowerCase();
-            const items = document.querySelectorAll(".article-item");
-            let anyVisible = false;
-
-            items.forEach(item => {
-                const title = item.dataset.title;
-                const match = title.includes(search);
-                item.style.display = match ? "list-item" : "none";
-                if (match) anyVisible = true;
-            });
-
-            document.getElementById("no-results").style.display = anyVisible ? "none" : "block";
-        }
     </script>
 
-
-
+    <!-- Filter Articles -->
     <script>
-        // Toggle visibility of a category
-        function toggleCategory(button) {
-            const list = button.nextElementSibling.querySelector('.article-subcategories'); // Get the subcategories
-            if (list.classList.contains('visible')) {
-                list.classList.remove('visible'); // Collapse the subcategories
-                list.style.display = 'none';
-            } else {
-                list.classList.add('visible'); // Expand the subcategories
-                list.style.display = 'block';
-            }
-        }
-
-        // Toggle visibility of a subcategory
-        function toggleSubcategory(button) {
-            const list = button.nextElementSibling; // Get the articles list for the subcategory
-            if (list.classList.contains('visible')) {
-                list.classList.remove('visible'); // Collapse the list of articles
-                list.style.display = 'none';
-            } else {
-                list.classList.add('visible'); // Expand the list of articles
-                list.style.display = 'block';
-            }
-        }
-
         function filterArticles() {
-            const searchInput = document.getElementById('search').value.toLowerCase().trim(); // Get the search term
-            const categories = document.querySelectorAll('.article-category'); // Get all categories
-            let foundAny = false; // Track if we found any matching articles
+            const search = document.getElementById('search').value.toLowerCase().trim();
+            const categories = document.querySelectorAll('.article-category');
+            let foundAny = false;
 
-            // If search is empty, show everything
-            if (searchInput === '') {
-                categories.forEach(category => {
-                    category.style.display = 'block'; // Show all categories
-                    const subcategories = category.querySelectorAll('.article-subcategory');
-                    subcategories.forEach(subcategory => {
-                        subcategory.style.display = 'block'; // Show all subcategories
-                        const list = subcategory.querySelector('.articles-list');
-                        list.style.display = 'block'; // Show articles list
-                        const articlesInSubcategory = subcategory.querySelectorAll('.article-item');
-                        articlesInSubcategory.forEach(article => {
-                            article.style.display = 'block'; // Show all articles
-                        });
-                    });
-                });
-                document.getElementById('no-results').style.display = 'none'; // Hide no results message
-                return; // No filtering needed when search is empty
-            }
-
-            // Loop through all categories and process
             categories.forEach(category => {
+                let categoryMatch = false;
+
                 const subcategories = category.querySelectorAll('.article-subcategory');
-                let categoryHasVisibleSubcategory = false;
-
                 subcategories.forEach(subcategory => {
-                    const articlesInSubcategory = subcategory.querySelectorAll('.article-item');
-                    let subcategoryHasVisibleArticles = false;
+                    let subcategoryMatch = false;
 
-                    // Loop through articles in the subcategory
-                    articlesInSubcategory.forEach(article => {
-                        const title = article.getAttribute('data-title') ? article.getAttribute('data-title').toLowerCase() : ''; // Ensure data-title exists
-                        if (title.includes(searchInput)) {
-                            article.style.display = 'block'; // Show matching article
-                            subcategoryHasVisibleArticles = true; // Mark this subcategory as having visible articles
-                            foundAny = true; // Track we found at least one matching article
+                    const topicgroups = subcategory.querySelectorAll('.article-topicgroup');
+                    topicgroups.forEach(topicgroup => {
+                        let topicgroupMatch = false;
+
+                        const articles = topicgroup.querySelectorAll('.article-item');
+                        articles.forEach(article => {
+                            const title = article.dataset.title || '';
+                            const match = title.includes(search);
+
+                            article.style.display = match ? 'list-item' : 'none';
+                            if (match) {
+                                topicgroupMatch = true;
+                                subcategoryMatch = true;
+                                categoryMatch = true;
+                                foundAny = true;
+                            }
+                        });
+
+                        topicgroup.style.display = topicgroupMatch ? 'block' : 'none';
+                        const topicgroupToggle = topicgroup.querySelector('.topicgroup-toggle');
+                        const topicgroupContent = topicgroupToggle?.nextElementSibling;
+                        if (topicgroupMatch) {
+                            topicgroupToggle?.classList.add('open');
+                            if (topicgroupContent) topicgroupContent.style.display = 'block';
                         } else {
-                            article.style.display = 'none'; // Hide non-matching articles
+                            topicgroupToggle?.classList.remove('open');
+                            if (topicgroupContent) topicgroupContent.style.display = 'none';
                         }
                     });
 
-                    // Show or hide subcategory based on matching articles
-                    if (subcategoryHasVisibleArticles) {
-                        subcategory.style.display = 'block'; // Show subcategory
-                        const list = subcategory.querySelector('.articles-list');
-                        list.style.display = 'block'; // Show articles list
+                    subcategory.style.display = subcategoryMatch ? 'block' : 'none';
+                    const subcategoryToggle = subcategory.querySelector('.subcategory-toggle');
+                    const subcategoryContent = subcategoryToggle?.nextElementSibling;
+                    if (subcategoryMatch) {
+                        subcategoryToggle?.classList.add('open');
+                        if (subcategoryContent) subcategoryContent.style.display = 'block';
                     } else {
-                        subcategory.style.display = 'none'; // Hide subcategory
-                        const list = subcategory.querySelector('.articles-list');
-                        list.style.display = 'none'; // Hide articles list
-                    }
-
-                    // Mark category as visible if this subcategory has visible articles
-                    if (subcategoryHasVisibleArticles) {
-                        categoryHasVisibleSubcategory = true;
+                        subcategoryToggle?.classList.remove('open');
+                        if (subcategoryContent) subcategoryContent.style.display = 'none';
                     }
                 });
 
-                // Show or hide the category based on subcategory visibility
-                if (categoryHasVisibleSubcategory) {
-                    category.style.display = 'block'; // Show category
+                category.style.display = categoryMatch ? 'block' : 'none';
+                const categoryToggle = category.querySelector('.category-toggle');
+                const categoryContent = categoryToggle?.nextElementSibling;
+                if (categoryMatch) {
+                    categoryToggle?.classList.add('open');
+                    if (categoryContent) categoryContent.style.display = 'block';
                 } else {
-                    category.style.display = 'none'; // Hide category if no subcategories have visible articles
+                    categoryToggle?.classList.remove('open');
+                    if (categoryContent) categoryContent.style.display = 'none';
                 }
             });
 
-            // Show "No Results" if no matching articles are found
-            const noResultsMessage = document.getElementById('no-results');
-            if (!foundAny) {
-                noResultsMessage.style.display = 'block'; // Show no results message
-            } else {
-                noResultsMessage.style.display = 'none'; // Hide no results message
-            }
+            document.getElementById('no-results').style.display = foundAny ? 'none' : 'block';
         }
-
     </script>
 
     {% include footer.html %}
@@ -239,69 +187,7 @@
                 top: 0,
                 behavior: 'smooth' // Smooth scrolling
             });
-        });</script>
-
-    <script>
-        function toggleCategory(button) {
-            const list = button.nextElementSibling; // Get the corresponding `.articles-list`
-
-            if (list.classList.contains('visible')) {
-                list.classList.remove('visible'); // Collapse if already expanded
-                list.style.display = 'none'; // Hide the list
-            } else {
-                list.classList.add('visible'); // Expand if collapsed
-                list.style.display = 'block'; // Show the list
-            }
-        }
-
-        function filterArticles() {
-            const searchInput = document.getElementById('search').value.toLowerCase(); // Get search term
-            const articles = document.querySelectorAll('.article-item'); // All articles
-            const categories = document.querySelectorAll('.article-category'); // All categories
-            let found = false;
-
-            // Filter articles
-            articles.forEach(article => {
-                const title = article.getAttribute('data-title');
-                const category = article.closest('.article-category');
-
-                if (title.includes(searchInput)) {
-                    article.style.display = 'block'; // Show matching articles
-                    found = true;
-
-                    // Expand all parent categories
-                    let parent = category;
-                    while (parent) {
-                        const list = parent.querySelector('.articles-list');
-                        list.classList.add('visible'); // Ensure it's expanded
-                        list.style.display = 'block'; // Show the list
-                        parent = parent.parentElement.closest('.article-category'); // Go to parent
-                    }
-                } else {
-                    article.style.display = 'none'; // Hide non-matching articles
-                }
-            });
-
-            // Hide empty categories
-            categories.forEach(category => {
-                const articlesInCategory = category.querySelectorAll('.article-item');
-                const isVisible = Array.from(articlesInCategory).some(article => article.style.display === 'block');
-                const list = category.querySelector('.articles-list');
-
-                if (isVisible) {
-                    category.style.display = 'block'; // Show category
-                    list.classList.add('visible'); // Ensure it's expanded
-                    list.style.display = 'block';
-                } else {
-                    category.style.display = 'none'; // Hide category
-                    list.classList.remove('visible'); // Collapse if empty
-                    list.style.display = 'none';
-                }
-            });
-
-            // Show "No Results" if no articles match
-            document.getElementById('no-results').style.display = found ? 'none' : 'block';
-        }
+        });
     </script>
 
 </body>

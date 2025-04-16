@@ -27,6 +27,10 @@
         </aside>
 
         <div class="article-content">
+            <div style="margin: auto; width: 50%; padding: 1em; font-size: 25px; font-weight: bold; color: var(--base-text-theme);">
+                {{page.title}}
+            </div>
+            <p style="font-style: oblique; margin: auto; width: 50%; color: var(--base-text-gray);"> Last edited {{ page.date }}</p>
             {{ content }} <!-- This is where the content of .md will be inserted -->
         </div>
     </main>

@@ -67,3 +67,7 @@ Ved pasienter med hodetraume er det viktig med oversikt på følgende:
 ---
 
 **Behandling**
+
+---
+
+{% include anatomi/underekstremiteter/Fot.md %}

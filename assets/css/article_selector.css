@@ -100,7 +100,6 @@
 .accordion-content {
     display: none;
     padding-left: 20px;
-    
 }
 
 .accordion-toggle.open + .accordion-content {

@@ -21,7 +21,9 @@
     --base-border-layer-2: #383838;
 
     --base-text-white: #F5F5F5;
+    --base-text-lightgray: #bdbdbd;
     --base-text-gray: #7b7b7b;
+    --base-text-theme: #ffd183;
 }
 
 *,
