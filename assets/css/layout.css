@@ -533,3 +533,37 @@
         flex: 1 1 100%; /* Stacks the boxes vertically on very small screens */
     }
 }
+
+
+
+
+
+
+/*
+    ---------------------------------------------------------
+    -------------- ARTICLES_TEXTBOXES -----------------------
+    ---------------------------------------------------------
+*/
+.textbox {
+    padding: 1em 2em;
+    margin: 2em;
+    border: 1px solid #ccc;
+    border-left: 6px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.tip-textbox {
+    border-color: var( --base-text-theme);
+    background-color: var(--base-background-layer-1);
+}
+
+.info-textbox {
+    border-color: #2196F3;
+    background-color: var(--base-background-layer-1);
+}
+
+.warning-textbox {
+    border-color: #f44336;
+    background-color: var(--base-background-layer-1);
+}

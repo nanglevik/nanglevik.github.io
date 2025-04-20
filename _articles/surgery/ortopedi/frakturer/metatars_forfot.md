@@ -44,3 +44,4 @@ Ved fraktur 1\. metatars → gips i 3 uker, kontroll med røntgen etter 3 uker f
 Brudd med betydelig feilstilling, intraartikulære brudd med \>2 mm trinndannelse.  
 Lukket reposisjon og pinning.
 
+{% include anatomi/underekstremiteter/Fot.md %}
